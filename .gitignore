@@ -139,6 +139,7 @@ functions/node_modules/
 .github/workflows/*.log
 
 # Local environment
+.env
 .env.local
 .env.development.local
 .env.test.local
