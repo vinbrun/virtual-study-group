@@ -1,0 +1,40 @@
+.home-container {
+    text-align: center;
+    padding: 20px;
+}
+
+.home-header h1 {
+    color: #333;
+}
+
+.home-actions {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.btn {
+    padding: 10px 20px;
+    margin: 5px;
+    text-decoration: none;
+    color: white;
+    border-radius: 5px;
+}
+
+.btn-primary {
+    background-color: #007bff;
+}
+
+.btn-secondary {
+    background-color: #6c757d;
+}
+
+.home-info, .home-features {
+    margin-top: 20px;
+    text-align: left;
+    padding: 20px;
+}
+
+.home-footer {
+    margin-top: 40px;
+    color: #777;
+}
