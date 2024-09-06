@@ -29,7 +29,7 @@ jobs:
     # Debug print out the added identities. This will prove SSH_AUTH_SOCK
     # is persisted across job steps
     - name: Print ssh-add identities
-      runs: ssh-add -l
+      run: ssh-add -l
 
     - name: Deploy to VM
       run: |
