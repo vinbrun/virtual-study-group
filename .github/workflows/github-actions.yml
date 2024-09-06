@@ -35,6 +35,10 @@ jobs:
         echo "echo $SSH_PASSPHRASE" > ~/.ssh_askpass && chmod +x ~/.ssh_askpass
         echo "$SSH_PRIVATE_KEY" | tr -d '\r' | DISPLAY=None SSH_ASKPASS=~/.ssh_askpass ssh-add - >/dev/null
 
+    - name: Configure Git Safe Directory
+      run: |
+        ssh ubuntu@kriesoft.com "git config --global --add safe.directory /var/www/virtual-study-group"
+
     - name: Test SSH connection
       run: |
         ssh ubuntu@kriesoft.com "echo SSH connection successful"
