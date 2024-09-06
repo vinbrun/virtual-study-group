@@ -13,12 +13,16 @@ const firebaseConfig = {
   appId: process.env.REACT_APP_FIREBASE_APP_ID,
 };
 
+
+
+
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 
 const db = getFirestore(app); // Initialize Firestore using the modular syntax
 const storage = getStorage(app);
 const auth = getAuth(app);
+
 
 setPersistence(auth, browserLocalPersistence)
   .then(() => {

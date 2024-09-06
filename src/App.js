@@ -1,4 +1,5 @@
 import React from 'react';
+import { app } from './firebase-config'; // Ensure firebase is correctly imported
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from './pages/Home';
 import Dashboard from './pages/Dashboard';
@@ -13,6 +14,10 @@ import RoomRoleBasedRoute from './components/RoomRoleBasedRoute';
 import NotAuthorized from './pages/NotAuthorized';
 import RoomAdminPanel from './pages/RoomAdminPanel';
 import RoomPage from './pages/RoomPage';
+
+
+
+
 
 function App() {
   return (
