@@ -5,31 +5,23 @@ on:
     branches:
       - main
 
-env:
-  # Use the same ssh-agent socket value across all jobs
-  # Useful when a GH action is using SSH behind-the-scenes
-  SSH_AUTH_SOCK: /tmp/ssh_agent.sock
-
 jobs:
   deploy:
     runs-on: ubuntu-latest
+
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
 
-    - name: Setup SSH passphrase
-      env:
-        SSH_PASSPHRASE: ${{secrets.SSH_PASSPHRASE}}
-        SSH_PRIVATE_KEY: ${{secrets.SSH_PRIVATE_KEY}}
+    - name: Add kriesoft.com to known_hosts
       run: |
-        ssh-agent -a $SSH_AUTH_SOCK > /dev/null
-        echo 'echo $SSH_PASSPHRASE' > ~/.ssh_askpass && chmod +x ~/.ssh_askpass
-        echo "$SSH_PRIVATE_KEY" | tr -d '\r' | DISPLAY=None SSH_ASKPASS=~/.ssh_askpass ssh-add - >/dev/null
+        # Add all relevant host keys for kriesoft.com
+        ssh-keyscan -H kriesoft.com >> ~/.ssh/known_hosts
 
-    # Debug print out the added identities. This will prove SSH_AUTH_SOCK
-    # is persisted across job steps
-    - name: Print ssh-add identities
-      run: ssh-add -l
+    - name: Setup SSH Agent
+      uses: webfactory/ssh-agent@v0.5.3
+      with:
+        ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
     - name: Deploy to VM
       run: |
