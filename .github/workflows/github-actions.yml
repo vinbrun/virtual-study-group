@@ -23,10 +23,13 @@ jobs:
         ssh-keyscan -H kriesoft.com >> ~/.ssh/known_hosts
         chmod 644 ~/.ssh/known_hosts
 
-    - name: Setup SSH Agent
-      uses: webfactory/ssh-agent@v0.5.3
-      with:
-        ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+    - name: Setup SSH Agent with passphrase
+      run: |
+        echo "${{ secrets.SSH_PRIVATE_KEY }}" > private_key.pem
+        chmod 600 private_key.pem
+        eval $(ssh-agent -s)
+        echo "${{ secrets.SSH_PASSPHRASE }}" | ssh-add private_key.pem
+        rm private_key.pem
 
     - name: Test SSH connection
       run: |
