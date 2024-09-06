@@ -5,6 +5,9 @@ on:
     branches:
       - main
 
+env:
+  SSH_AUTH_SOCK: /tmp/ssh_agent.sock
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -23,15 +26,19 @@ jobs:
         ssh-keyscan -H kriesoft.com >> ~/.ssh/known_hosts
         chmod 644 ~/.ssh/known_hosts
 
-    - name: Setup SSH Agent with passphrase
+    - name: Setup SSH with passphrase
+      env:
+        SSH_PASSPHRASE: ${{ secrets.SSH_PASSPHRASE }}
+        SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
       run: |
-        echo "${{ secrets.SSH_PRIVATE_KEY }}" > private_key.pem
-        chmod 600 private_key.pem
-        eval $(ssh-agent -s)
-        echo "${{ secrets.SSH_PASSPHRASE }}" | ssh-add private_key.pem
-        ssh-add -l  # Print loaded keys for debugging
-        rm private_key.pem
+        ssh-agent -a $SSH_AUTH_SOCK > /dev/null
+        echo "echo $SSH_PASSPHRASE" > ~/.ssh_askpass && chmod +x ~/.ssh_askpass
+        echo "$SSH_PRIVATE_KEY" | tr -d '\r' | DISPLAY=None SSH_ASKPASS=~/.ssh_askpass ssh-add - >/dev/null
 
     - name: Test SSH connection
       run: |
         ssh ubuntu@kriesoft.com "echo SSH connection successful"
+
+    - name: Deploy to VM
+      run: |
+        ssh ubuntu@kriesoft.com "cd /var/www/virtual-study-group && git pull && npm install && pm2 restart all"
