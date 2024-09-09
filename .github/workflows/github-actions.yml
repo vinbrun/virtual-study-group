@@ -21,9 +21,9 @@ jobs:
         mkdir -p ~/.ssh
         chmod 700 ~/.ssh
 
-    - name: Add kriesoft.com to known_hosts
+    - name: Add sharednotes.app to known_hosts
       run: |
-        ssh-keyscan -H kriesoft.com >> ~/.ssh/known_hosts
+        ssh-keyscan -H sharednotes.app >> ~/.ssh/known_hosts
         chmod 644 ~/.ssh/known_hosts
 
     - name: Setup SSH with passphrase
@@ -37,12 +37,12 @@ jobs:
 
     - name: Configure Git Safe Directory
       run: |
-        ssh ubuntu@kriesoft.com "git config --global --add safe.directory /var/www/virtual-study-group"
+        ssh ubuntu@sharednotes.app "git config --global --add safe.directory /var/www/virtual-study-group"
 
     - name: Test SSH connection
       run: |
-        ssh ubuntu@kriesoft.com "echo SSH connection successful"
+        ssh ubuntu@sharednotes.app "echo SSH connection successful"
 
     - name: Deploy to VM
       run: |
-        ssh ubuntu@kriesoft.com "cd /var/www/virtual-study-group && git pull && npm ci && npm run build && pm2 reload all || exit 1"
+        ssh ubuntu@sharednotes.app "cd /var/www/virtual-study-group && git pull && npm ci && npm run build && pm2 reload all || exit 1"
