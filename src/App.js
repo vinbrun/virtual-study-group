@@ -26,17 +26,14 @@ function App() {
       <Header />  {/* Include Header on every page */}
       <div>
         <Routes>
-	  <Route path="/login" element={<AuthPage />} />
           <Route path="/create-room" element={<PrivateRoute><CreateRoom /></PrivateRoute>} />
-          <Route path="/room/:roomId" element={<RoomDetail />} />
+          <Route path="/room/:roomId" element={<PrivateRoute><RoomDetail /></PrivateRoute>} />
           <Route path="/dashboard" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
           <Route path="/profile" element={<PrivateRoute><Profile /></PrivateRoute>} />
           <Route path="/" element={<Home />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
-
           <Route path="/room/:roomId/admin" element={<RoomRoleBasedRoute requiredRole="admin"><RoomAdminPanel /></RoomRoleBasedRoute>} />
           <Route path="/room/:roomId/page" element={<RoomRoleBasedRoute requiredRole="member"><RoomPage /></RoomRoleBasedRoute>} />
-          
           <Route path="/not-authorized" element={<NotAuthorized />} />
         </Routes>
       </div>

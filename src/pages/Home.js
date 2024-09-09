@@ -1,12 +1,29 @@
 import React, { useState, useEffect } from 'react';
 import RoomList from '../components/rooms/RoomList'; // Reuse the RoomList component
 import { collection, getDocs } from 'firebase/firestore';
-import { db } from '../firebase-config';
+import { db, auth } from '../firebase-config'; // Import Firebase auth
+import { onAuthStateChanged } from 'firebase/auth'; // Firebase function to check auth state
+import { useNavigate } from 'react-router-dom'; // React Router for navigation
 import './Home.css'; // CSS for styling the Home page
 
 function Home() {
     const [publicRooms, setPublicRooms] = useState([]);
+    const navigate = useNavigate(); // For programmatic navigation
 
+    // Check if the user is logged in and redirect to Dashboard if true
+    useEffect(() => {
+        const unsubscribe = onAuthStateChanged(auth, (user) => {
+            if (user) {
+                // If user is logged in, redirect to Dashboard
+                navigate('/dashboard');
+            }
+        });
+
+        // Cleanup the auth state listener on unmount
+        return () => unsubscribe();
+    }, [navigate]);
+
+    // Fetch public rooms from Firestore
     useEffect(() => {
         const fetchPublicRooms = async () => {
             try {

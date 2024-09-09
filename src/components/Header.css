@@ -94,7 +94,7 @@
 .user-dropdown .dropdown-content {
     display: none;
     position: absolute;
-    top: 45px; /* Positioned just below the profile picture */
+    top: 40px; /* Positioned just below the profile picture */
     right: 0;
     background-color: #fff;
     color: #333;
