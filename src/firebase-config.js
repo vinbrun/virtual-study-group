@@ -1,7 +1,7 @@
 import { getFirestore } from 'firebase/firestore';
 import { getStorage } from 'firebase/storage';
-import { getAuth, setPersistence, browserLocalPersistence } from 'firebase/auth';
-import { initializeApp } from "firebase/app";
+import { getAuth, setPersistence, browserLocalPersistence, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
+import { initializeApp } from 'firebase/app';
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -16,17 +16,28 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 
-const db = getFirestore(app); // Initialize Firestore using the modular syntax
+const db = getFirestore(app); // Initialize Firestore
 const storage = getStorage(app);
 const auth = getAuth(app);
 
 setPersistence(auth, browserLocalPersistence)
   .then(() => {
-    // Session persistence is set
     console.log("Persistence set to LOCAL");
   })
   .catch((error) => {
     console.error("Failed to set persistence:", error);
   });
+
+// Google Sign-In
+export const signInWithGoogle = async () => {
+  const provider = new GoogleAuthProvider();
+  try {
+    const result = await signInWithPopup(auth, provider);
+    return result.user; // Google user data
+  } catch (error) {
+    console.error('Google Sign-In Error', error);
+    throw error;
+  }
+};
 
 export { db, storage, app, auth };

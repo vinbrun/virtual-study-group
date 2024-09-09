@@ -1,7 +1,8 @@
+// src/pages/Dashboard.js
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import { collection, getDocs, doc, getDoc, addDoc } from 'firebase/firestore';
 import { db, auth } from '../firebase-config';
+import RoomList from '../components/rooms/RoomList'; // Reuse the RoomList component
 
 function Dashboard() {
     const [ownedRooms, setOwnedRooms] = useState([]);
@@ -10,7 +11,6 @@ function Dashboard() {
     const [publicRooms, setPublicRooms] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
-    const [roomIdInput, setRoomIdInput] = useState(''); // State for room ID input
 
     useEffect(() => {
         const fetchRoomsAndRoles = async () => {
@@ -31,12 +31,10 @@ function Dashboard() {
                         const roomId = roomDoc.id;
                         const roomData = { id: roomId, ...roomDoc.data() };
 
-                        // Check if the room is public
                         if (roomData.public) {
                             publicRoomsList.push(roomData);
                         }
 
-                        // Check user's role in the room
                         const memberRef = doc(db, 'rooms', roomId, 'members', user.uid);
                         const memberSnap = await getDoc(memberRef);
 
@@ -73,7 +71,6 @@ function Dashboard() {
             const user = auth.currentUser;
             if (!user) throw new Error('User not authenticated');
 
-            // Send a notification to the room admins for access request
             const notificationsRef = collection(db, 'rooms', roomId, 'notifications');
             await addDoc(notificationsRef, {
                 type: 'access_request',
@@ -88,34 +85,6 @@ function Dashboard() {
         }
     };
 
-    // Handle joining a room by entering its ID
-    const handleJoinRoomById = async () => {
-        try {
-            const user = auth.currentUser;
-            if (!user) throw new Error('User not authenticated');
-
-            const roomRef = doc(db, 'rooms', roomIdInput);
-            const roomSnap = await getDoc(roomRef);
-
-            if (roomSnap.exists()) {
-                // Send a notification to the room admins for access request
-                const notificationsRef = collection(db, 'rooms', roomIdInput, 'notifications');
-                await addDoc(notificationsRef, {
-                    type: 'access_request',
-                    userId: user.uid,
-                    userName: user.email,
-                    timestamp: new Date(),
-                });
-
-                alert('Access request sent!');
-            } else {
-                alert('Room not found. Please check the room ID.');
-            }
-        } catch (error) {
-            setError('Failed to join room: ' + error.message);
-        }
-    };
-
     if (loading) {
         return <p>Loading rooms...</p>;
     }
@@ -127,70 +96,12 @@ function Dashboard() {
     return (
         <div>
             <h1>Dashboard</h1>
-
-            {/* Input for joining a room by ID */}
-            <div>
-                <h2>Join a Room by ID</h2>
-                <input
-                    type="text"
-                    value={roomIdInput}
-                    onChange={(e) => setRoomIdInput(e.target.value)}
-                    placeholder="Enter room ID"
-                />
-                <button onClick={handleJoinRoomById}>Join Room</button>
-            </div>
-
-            {ownedRooms.length > 0 && (
-                <div>
-                    <h2>Owned Rooms</h2>
-                    <ul>
-                        {ownedRooms.map((room) => (
-                            <li key={room.id}>
-                                <Link to={`/room/${room.id}`}>{room.name}</Link>
-                            </li>
-                        ))}
-                    </ul>
-                </div>
-            )}
-
-            {adminRooms.length > 0 && (
-                <div>
-                    <h2>Admin Rooms</h2>
-                    <ul>
-                        {adminRooms.map((room) => (
-                            <li key={room.id}>
-                                <Link to={`/room/${room.id}`}>{room.name}</Link>
-                            </li>
-                        ))}
-                    </ul>
-                </div>
-            )}
-
-            {memberRooms.length > 0 && (
-                <div>
-                    <h2>Member Rooms</h2>
-                    <ul>
-                        {memberRooms.map((room) => (
-                            <li key={room.id}>
-                                <Link to={`/room/${room.id}`}>{room.name}</Link>
-                            </li>
-                        ))}
-                    </ul>
-                </div>
-            )}
-
+            {/* Reuse RoomList Component */}
+            {ownedRooms.length > 0 && <RoomList rooms={ownedRooms} isPublic={false} />}
+            {adminRooms.length > 0 && <RoomList rooms={adminRooms} isPublic={false} />}
+            {memberRooms.length > 0 && <RoomList rooms={memberRooms} isPublic={false} />}
             {publicRooms.length > 0 && (
-                <div>
-                    <h2>Public Rooms</h2>
-                    <ul>
-                        {publicRooms.map((room) => (
-                            <li key={room.id}>
-                                <Link to={`/room/${room.id}`}>{room.name}</Link>
-                                <button onClick={() => handleRequestAccess(room.id)}>Request Access</button>
-                            </li>
-                        ))}
-                    </ul>
-                </div>
+                <RoomList rooms={publicRooms} isPublic={true} handleRequestAccess={handleRequestAccess} />
             )}
         </div>
     );

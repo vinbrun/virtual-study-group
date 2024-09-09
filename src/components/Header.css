@@ -1,0 +1,145 @@
+/* General Header Styling */
+.app-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    background-color: #f8f9fa; /* Light, academic-friendly background */
+    color: #333; /* Dark text for good contrast */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Soft shadow */
+}
+
+.header-left, .header-right {
+    display: flex;
+    align-items: center;
+}
+
+.header-center {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+}
+
+.header-center h1 {
+    margin: 0;
+    font-size: 22px;
+    color: #333; /* Darker heading */
+    font-weight: bold;
+}
+
+/* App Logo */
+.app-logo {
+    height: 40px;
+    transition: transform 0.3s ease;
+}
+
+.app-logo:hover {
+    transform: scale(1.05);
+}
+
+/* Enhanced Login Button Styling */
+.plain-text-link {
+    font-size: 16px;
+    color: #007BFF; /* Bright blue to make it stand out */
+    text-decoration: none;
+    cursor: pointer;
+    font-weight: 500;
+    padding: 8px 20px; /* Added padding for button-like feel */
+    border: 2px solid #007BFF; /* Border to define the button */
+    border-radius: 8px; /* Rounded corners */
+    background-color: transparent; /* Transparent background */
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+.plain-text-link:hover {
+    background-color: #007BFF; /* Blue background on hover */
+    color: white; /* White text on hover for contrast */
+    border-color: #0056b3; /* Darker border on hover */
+}
+
+.plain-text-link:active {
+    background-color: #0056b3; /* Even darker background when pressed */
+    border-color: #004494; /* Darker border on click */
+}
+
+/* Profile Picture and Dropdown */
+.user-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 12px;
+    cursor: pointer;
+    border: 2px solid #007BFF;
+    transition: transform 0.3s ease;
+}
+
+.user-icon:hover {
+    transform: scale(1.1);
+}
+
+/* Dropdown positioning fix */
+.user-dropdown {
+    position: relative;
+}
+
+.user-dropdown .dropdown-content {
+    display: none;
+    position: absolute;
+    top: 50px;
+    right: 0;
+    background-color: #fff;
+    color: #333;
+    border-radius: 5px;
+    padding: 8px 0;
+    min-width: 150px;
+    box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.1);
+    z-index: 1;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.user-dropdown:hover .dropdown-content {
+    display: block;
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Ensure uniform styling for both links and buttons */
+.dropdown-content a, .dropdown-content button {
+    color: #333;
+    font-size: 14px;
+    font-family: 'Arial', sans-serif; /* Use the same font */
+    font-weight: normal; /* Ensure consistent font weight */
+    padding: 8px 12px;
+    text-decoration: none;
+    display: block;
+    background: none;
+    border: none;
+    width: 100%;
+    text-align: left;
+    cursor: pointer;
+    box-sizing: border-box;
+}
+
+/* Add hover effect for both link and button */
+.dropdown-content a:hover, .dropdown-content button:hover {
+    background-color: #f1f1f1;
+}
+
+/* Ensure button styles match the link styles */
+.dropdown-content button {
+    background-color: transparent;
+    padding: 8px 12px;
+    font-size: 14px;
+    font-family: 'Arial', sans-serif; /* Same font for button */
+    font-weight: normal; /* Ensure font weight matches */
+    color: #333;
+    border: none;
+    text-align: left;
+    width: 100%;
+    cursor: pointer;
+}

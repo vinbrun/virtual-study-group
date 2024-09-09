@@ -1,33 +1,78 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import './Home.css';  // Adjust the path according to your file structure
+import React, { useState, useEffect } from 'react';
+import RoomList from '../components/rooms/RoomList'; // Reuse the RoomList component
+import { collection, getDocs } from 'firebase/firestore';
+import { db } from '../firebase-config';
+import './Home.css'; // CSS for styling the Home page
 
 function Home() {
+    const [publicRooms, setPublicRooms] = useState([]);
+
+    useEffect(() => {
+        const fetchPublicRooms = async () => {
+            try {
+                const roomsCollection = collection(db, 'rooms');
+                const roomSnapshot = await getDocs(roomsCollection);
+                const publicRoomsList = roomSnapshot.docs
+                    .map((roomDoc) => ({ id: roomDoc.id, ...roomDoc.data() }))
+                    .filter((roomData) => roomData.public);
+
+                setPublicRooms(publicRoomsList);
+            } catch (error) {
+                console.error('Failed to fetch public rooms:', error);
+            }
+        };
+
+        fetchPublicRooms();
+    }, []);
+
     return (
         <div className="home-container">
-            <header className="home-header">
-                <h1>Welcome to the Virtual Study Group Platform</h1>
-                <p>Connect and collaborate with students worldwide.</p>
-            </header>
-            <section className="home-actions">
-                <Link to="/signup" className="btn btn-primary">Sign Up</Link>
-                <Link to="/signin" className="btn btn-secondary">Sign In</Link>
+            {/* Two-column layout for welcome and public rooms */}
+            <div className="main-layout">
+                {/* Small Welcome Section on the Left */}
+                <section className="small-hero-section">
+                    <h1>Welcome to Shared Notes</h1>
+                    <p>Collaborate, share, and learn together!</p>
+                    <button className="cta-button">Get Started</button>
+                </section>
+
+                {/* Public Rooms Section on the Right */}
+                <section className="public-rooms-section">
+                    <h2>Public Rooms</h2>
+                    {publicRooms.length > 0 ? (
+                        <RoomList rooms={publicRooms} isPublic={true} />
+                    ) : (
+                        <p>No public rooms available at the moment.</p>
+                    )}
+                </section>
+            </div>
+
+            {/* Features Section (Optional) */}
+            <section className="features-section">
+                <h2>Why Choose Shared Notes?</h2>
+                <div className="features-grid">
+                    <div className="feature-item">
+                        <h3>Create Study Rooms</h3>
+                        <p>Create private or public rooms to study with peers.</p>
+                    </div>
+                    <div className="feature-item">
+                        <h3>Share Notes</h3>
+                        <p>Share and access resources easily with your study group.</p>
+                    </div>
+                    <div className="feature-item">
+                        <h3>Collaborate in Real Time</h3>
+                        <p>Work together through integrated tools like chat and notes.</p>
+                    </div>
+                </div>
             </section>
-            <section className="home-info">
-                <h2>Why Join Us?</h2>
-                <p>Engage in productive study sessions, share resources, and enhance your learning experience with peers from your courses and others.</p>
-            </section>
-            <section className="home-features">
-                <h2>Features</h2>
-                <ul>
-                    <li>Create or join real-time study rooms.</li>
-                    <li>Share and access notes and resources easily.</li>
-                    <li>Communicate through integrated chat systems.</li>
-                    <li>Manage your study schedules and plan sessions.</li>
-                </ul>
-            </section>
+
+            {/* Footer */}
             <footer className="home-footer">
-                <p>&copy; {new Date().getFullYear()} Virtual Study Group Platform. All rights reserved.</p>
+                <p>&copy; {new Date().getFullYear()} Shared Notes. All rights reserved.</p>
+                <div className="footer-links">
+                    <a href="/terms">Terms of Service</a>
+                    <a href="/privacy">Privacy Policy</a>
+                </div>
             </footer>
         </div>
     );

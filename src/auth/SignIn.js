@@ -1,6 +1,8 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate
-import { signIn } from '../services/AuthService'; // Import the signIn function
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { signIn } from '../services/AuthService';
+import { onAuthStateChanged } from 'firebase/auth';
+import { auth } from '../firebase-config'; // Ensure Firebase is imported
 
 function SignIn() {
     const [email, setEmail] = useState('');
@@ -9,12 +11,25 @@ function SignIn() {
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate(); // Initialize useNavigate hook
 
+    // Check if user is already logged in
+    useEffect(() => {
+        const unsubscribe = onAuthStateChanged(auth, (user) => {
+            if (user) {
+                // User is logged in, redirect to the dashboard
+                navigate('/dashboard');
+            }
+        });
+        
+        // Cleanup the listener on unmount
+        return () => unsubscribe();
+    }, [navigate]);
+
     const handleSignIn = async (e) => {
-        e.preventDefault(); // Prevent default form submission behavior
+        e.preventDefault();
         setLoading(true);
         try {
             await signIn(email, password);
-            navigate('/dashboard'); // Redirect to dashboard after successful sign-in
+            navigate('/dashboard'); // Redirect after successful sign-in
         } catch (error) {
             setError('Failed to sign in: ' + error.message);
         }
@@ -25,7 +40,7 @@ function SignIn() {
         <div>
             <h1>Sign In</h1>
             {error && <p style={{ color: 'red' }}>{error}</p>}
-            <form onSubmit={handleSignIn}> {/* Form element to handle Enter key submission */}
+            <form onSubmit={handleSignIn}>
                 <input
                     type="email"
                     value={email}

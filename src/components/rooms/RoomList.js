@@ -1,30 +1,16 @@
-import React, { useState, useEffect } from 'react';
+// src/components/RoomList.js
+import React from 'react';
 import { Link } from 'react-router-dom';
-import db from '../../firebase-config';
 
-function RoomList() {
-    const [rooms, setRooms] = useState([]);
-
-    useEffect(() => {
-        const unsubscribe = db.collection('rooms').where('active', '==', true)
-            .onSnapshot(snapshot => {
-                const fetchedRooms = snapshot.docs.map(doc => ({
-                    id: doc.id,
-                    ...doc.data()
-                }));
-                setRooms(fetchedRooms);
-            });
-
-        return () => unsubscribe();
-    }, []);
-
+function RoomList({ rooms, isPublic, handleRequestAccess }) {
     return (
         <div>
-            <h2>Available Study Rooms</h2>
+            <h2>{isPublic ? 'Public Rooms' : 'Available Rooms'}</h2>
             <ul>
-                {rooms.map(room => (
+                {rooms.map((room) => (
                     <li key={room.id}>
-                        <Link to={`/room/${room.id}`}>{room.name}</Link> - {room.description}
+                        <Link to={`/room/${room.id}`}>{room.name}</Link>
+                        {isPublic && <button onClick={() => handleRequestAccess(room.id)}>Request Access</button>}
                     </li>
                 ))}
             </ul>

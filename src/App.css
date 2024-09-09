@@ -1,10 +1,23 @@
+/* Center the App content and set consistent font and layout */
 .App {
   text-align: center;
+  margin: 0;
+  padding: 0;
+  width: 100vw; /* Make sure it fits the viewport */
+  height: 100vh; /* Full viewport height */
+  overflow-x: hidden; /* Disable horizontal scroll */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #f0f0f0; /* Lighter background for better contrast */
 }
 
+/* App logo styling */
 .App-logo {
   height: 40vmin;
   pointer-events: none;
+  transition: transform 0.3s ease-in-out;
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -13,26 +26,61 @@
   }
 }
 
+/* App header with full width and centered content */
 .App-header {
   background-color: #282c34;
   min-height: 100vh;
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
+  padding: 20px; /* Add padding for spacing */
+  box-sizing: border-box;
 }
 
 .App-link {
   color: #61dafb;
+  text-decoration: none;
+  font-size: 1.2rem;
+  margin-top: 20px;
+  transition: color 0.3s ease;
 }
 
+.App-link:hover {
+  color: #21a1f1;
+}
+
+/* Keyframes for smooth spinning of the logo */
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
   }
   to {
     transform: rotate(360deg);
+  }
+}
+
+/* Media Queries for responsiveness */
+@media (max-width: 768px) {
+  .App-header {
+    font-size: calc(12px + 2vmin);
+    padding: 10px;
+  }
+
+  .App-logo {
+    height: 60vmin;
+  }
+}
+
+@media (max-width: 480px) {
+  .App-header {
+    font-size: calc(8px + 2vmin);
+  }
+
+  .App-logo {
+    height: 80vmin;
   }
 }
