@@ -3,9 +3,9 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 15px 20px;
-    background-color: #f8f9fa; /* Light, academic-friendly background */
-    color: #333; /* Dark text for good contrast */
+    padding: 8px 15px; /* Slimmer padding */
+    background-color: #f8f9fa;
+    color: #333;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Soft shadow */
 }
 
@@ -23,54 +23,54 @@
 
 .header-center h1 {
     margin: 0;
-    font-size: 22px;
-    color: #333; /* Darker heading */
+    font-size: 20px; /* Increased font size to match larger logo/profile */
+    color: #333;
     font-weight: bold;
 }
 
-/* App Logo */
+/* App Logo - Original size restored */
 .app-logo {
-    height: 40px;
+    height: 40px; /* Restored to the original size */
     transition: transform 0.3s ease;
 }
 
 .app-logo:hover {
-    transform: scale(1.05);
+    transform: scale(1.10);
 }
 
 /* Enhanced Login Button Styling */
 .plain-text-link {
-    font-size: 16px;
-    color: #007BFF; /* Bright blue to make it stand out */
+    font-size: 16px; /* Restored font size */
+    color: #007BFF;
     text-decoration: none;
     cursor: pointer;
     font-weight: 500;
-    padding: 8px 20px; /* Added padding for button-like feel */
-    border: 2px solid #007BFF; /* Border to define the button */
-    border-radius: 8px; /* Rounded corners */
-    background-color: transparent; /* Transparent background */
+    padding: 6px 15px;
+    border: 1px solid #007BFF;
+    border-radius: 6px;
+    background-color: transparent;
     transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
 }
 
 .plain-text-link:hover {
-    background-color: #007BFF; /* Blue background on hover */
-    color: white; /* White text on hover for contrast */
-    border-color: #0056b3; /* Darker border on hover */
+    background-color: #007BFF;
+    color: white;
+    border-color: #0056b3;
 }
 
 .plain-text-link:active {
-    background-color: #0056b3; /* Even darker background when pressed */
-    border-color: #004494; /* Darker border on click */
+    background-color: #0056b3;
+    border-color: #004494;
 }
 
-/* Profile Picture and Dropdown */
+/* Profile Picture and Dropdown - Original size restored */
 .user-icon {
-    width: 40px;
+    width: 40px; /* Restored profile picture size */
     height: 40px;
     border-radius: 50%;
-    margin-right: 12px;
+    margin-right: 10px; /* Balanced margin */
     cursor: pointer;
-    border: 2px solid #007BFF;
+    border: 2px solid #007BFF; /* Restored thicker border */
     transition: transform 0.3s ease;
 }
 
@@ -81,12 +81,20 @@
 /* Dropdown positioning fix */
 .user-dropdown {
     position: relative;
+    display: inline-block; /* Make the whole dropdown a block element */
 }
 
+.user-dropdown:hover .dropdown-content {
+    display: block;
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Adjust the dropdown to avoid any gap */
 .user-dropdown .dropdown-content {
     display: none;
     position: absolute;
-    top: 50px;
+    top: 45px; /* Positioned just below the profile picture */
     right: 0;
     background-color: #fff;
     color: #333;
@@ -97,12 +105,12 @@
     z-index: 1;
     opacity: 0;
     visibility: hidden;
-    transition: opacity 0.3s ease;
-    white-space: nowrap;
-    overflow: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
 }
 
-.user-dropdown:hover .dropdown-content {
+/* Prevent the gap by extending the hoverable area */
+.user-dropdown:hover .dropdown-content, 
+.dropdown-content:hover {
     display: block;
     opacity: 1;
     visibility: visible;
@@ -111,10 +119,10 @@
 /* Ensure uniform styling for both links and buttons */
 .dropdown-content a, .dropdown-content button {
     color: #333;
-    font-size: 14px;
-    font-family: 'Arial', sans-serif; /* Use the same font */
-    font-weight: normal; /* Ensure consistent font weight */
-    padding: 8px 12px;
+    font-size: 14px; /* Restored font size for dropdown items */
+    font-family: 'Arial', sans-serif;
+    font-weight: normal;
+    padding: 6px 12px; /* Slight increase for more comfortable padding */
     text-decoration: none;
     display: block;
     background: none;
@@ -125,18 +133,16 @@
     box-sizing: border-box;
 }
 
-/* Add hover effect for both link and button */
 .dropdown-content a:hover, .dropdown-content button:hover {
     background-color: #f1f1f1;
 }
 
-/* Ensure button styles match the link styles */
 .dropdown-content button {
     background-color: transparent;
-    padding: 8px 12px;
+    padding: 6px 12px;
     font-size: 14px;
-    font-family: 'Arial', sans-serif; /* Same font for button */
-    font-weight: normal; /* Ensure font weight matches */
+    font-family: 'Arial', sans-serif;
+    font-weight: normal;
     color: #333;
     border: none;
     text-align: left;
