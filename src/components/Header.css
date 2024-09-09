@@ -65,8 +65,8 @@
 
 /* Profile Picture and Dropdown - Original size restored */
 .user-icon {
-    width: 40px; /* Restored profile picture size */
-    height: 40px;
+    width: 35px; /* Restored profile picture size */
+    height: 35px;
     border-radius: 50%;
     margin-right: 10px; /* Balanced margin */
     cursor: pointer;

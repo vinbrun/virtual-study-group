@@ -10,12 +10,14 @@ html, body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 20px;
+    padding: 40px;
+    padding-bottom: 20px;
     width: 100%;
     max-width: 100vw; /* Prevent content from exceeding viewport width */
-    background-color: #e0e0e0;
+    background-color: #ffffff;
+    background-repeat: repeat;
     background-image: url('../assets/45-degree-fabric-dark.png');
-    background-size: cover;
+    background-size: 15%;
     background-attachment: fixed; /* Keep background fixed when scrolling */
     box-sizing: border-box; /* Include padding and borders in the element’s width */
 }
@@ -27,7 +29,7 @@ html, body {
     align-items: flex-start;
     width: 100%;
     max-width: 1200px;
-    margin-top: 50px;
+    margin-top: 30px;
     gap: 30px;
     box-sizing: border-box; /* Ensure layout doesn't overflow */
 }
@@ -36,7 +38,7 @@ html, body {
 .small-hero-section {
     width: 35%;
     padding: 20px;
-    background-color: rgba(0, 123, 255, 0.9); /* Slightly transparent blue */
+    background-color: rgb(0 76 255 / 90%);
     color: white;
     border-radius: 15px;
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
@@ -82,7 +84,7 @@ html, body {
 
 .public-rooms-section h2 {
     font-size: 2.2rem;
-    color: #007BFF;
+    color: rgb(0 76 255 / 80%);
     margin-bottom: 20px;
 }
 
@@ -93,6 +95,13 @@ html, body {
     text-align: center;
     margin: 50px 0;
 }
+
+.features-section h2 {
+    font-family: 'Poppins', sans-serif; /* Use Poppins for the heading */
+    font-size: 1.5rem;
+    margin-bottom: 25px;
+}
+
 
 .features-grid {
     display: grid;
@@ -112,7 +121,7 @@ html, body {
 
 .feature-item h3 {
     font-size: 1.5rem;
-    color: #007BFF;
+    color: rgb(0 76 255 / 80%);
     margin-bottom: 15px;
 }
 
@@ -129,21 +138,44 @@ html, body {
 /* Footer */
 .home-footer {
     text-align: center;
-    margin-top: 50px;
-    padding: 30px;
-    background-color: #007BFF;
+    padding: 20px 15px; /* Reduced padding for a slimmer appearance */
+    background: linear-gradient(135deg, #007BFF, #0056b3); /* Gradient for modern look */
     color: white;
     width: 100%;
+    max-width: 1200px;
     box-sizing: border-box;
+    box-shadow: 0 -3px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow at the top */
+    border-radius: 20px; 
+}
+
+/* Footer Text */
+.home-footer p {
+    margin: 5px 0; /* Reduced margin for less vertical space */
+    font-size: 1rem; /* Slightly smaller font size */
+    font-weight: 300;
+}
+
+/* Footer Links */
+.footer-links {
+    margin-top: 10px; /* Reduced space above links */
+    display: flex;
+    justify-content: center;
+    gap: 10px; /* Reduced gap between links */
 }
 
 .footer-links a {
     color: white;
-    margin: 0 10px;
     text-decoration: none;
-    font-size: 1rem;
+    font-size: 0.9rem; /* Slightly smaller font size */
+    font-weight: 500;
+    padding: 4px 10px; /* Reduced padding for a more compact look */
+    border-radius: 8px;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .footer-links a:hover {
-    text-decoration: underline;
+    background-color: white;
+    color: #007BFF;
+    text-decoration: none; /* No underline on hover */
 }
+

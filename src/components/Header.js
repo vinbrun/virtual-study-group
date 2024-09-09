@@ -74,7 +74,7 @@ function Header() {
                 {user ? (
                     <div className="user-dropdown">
                         <img
-                            src={user.photoURL || "/default-account-icon.svg"}
+                            src={user.photoURL || "/icons8-account-50.png"}
                             alt="User"
                             className="user-icon"
                         />
